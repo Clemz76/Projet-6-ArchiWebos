@@ -283,3 +283,16 @@ button {
    gap: 10px;
    margin: 50px;
 }
+
+.login {
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+.login-form {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   margin: 40px;
+}

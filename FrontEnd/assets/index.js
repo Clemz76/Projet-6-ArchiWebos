@@ -10,8 +10,11 @@ async function getWorks() {
 getWorks();
 
 /*Fonction display galerie*/
-async function displayWorks() {
-   const arrayWorks = await getWorks();
+async function displayWorks(arrayWorks = null) {
+   gallery.innerHTML = "";
+   if (arrayWorks == null) {
+      arrayWorks = await getWorks();
+   }
    arrayWorks.forEach((work) => {
       const figure = document.createElement("figure");
       const img = document.createElement("img");
@@ -24,3 +27,42 @@ async function displayWorks() {
    });
 }
 displayWorks();
+
+/*Fonction get catégories*/
+async function getCategories() {
+   const response = await fetch("http://localhost:5678/api/categories");
+   return await response.json();
+}
+
+/*Fonction display boutons*/
+async function displayCategoriesButtons() {
+   const categories = await getCategories();
+   categories.forEach((category) => {
+      const btn = document.createElement("button");
+      btn.textContent = category.name;
+      btn.id = category.id;
+      filters.appendChild(btn);
+   });
+}
+displayCategoriesButtons();
+
+/*Fonction boutons filtres*/
+async function filtersButtons() {
+   const filterWorks = await getWorks();
+   const buttons = document.querySelectorAll(".filters button");
+   buttons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+         btnId = e.target.id;
+         gallery.innerHTML = "";
+         if (btnId !== "0") {
+            const workTriCategory = filterWorks.filter((work) => {
+               return work.categoryId == btnId;
+            });
+            displayWorks(workTriCategory);
+         } else {
+            displayWorks();
+         }
+      });
+   });
+}
+filtersButtons();
