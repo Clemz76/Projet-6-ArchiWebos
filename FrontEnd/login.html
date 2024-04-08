@@ -16,12 +16,14 @@
    </head>
    <body>
       <header>
-         <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+         <a class="logo" href="index.html"
+            ><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a
+         >
          <nav>
             <ul>
-               <li>projets</li>
-               <li>contact</li>
-               <li>login</li>
+               <li><a href="../FrontEnd/index.html#portfolio">projets</a></li>
+               <li><a href="../FrontEnd/index.html#contact">contact</a></li>
+               <li><a id="headerLoginLogged" href="login.html">login</a></li>
                <li>
                   <img src="./assets/icons/instagram.png" alt="Instagram" />
                </li>
@@ -40,9 +42,11 @@
                <div id="erreurMessage">
                   Votre mot de passe n'est pas correct
                </div>
-               <button id="buttonLogin">Se connecter</button>
+               <div class="buttonLoginContainer">
+                  <button id="buttonLogin">Se connecter</button>
+               </div>
             </form>
-            <a href="#">Mot de passe oublié</a>
+            <a class="forgotPW" href="#">Mot de passe oublié</a>
          </section>
       </main>
 

@@ -153,3 +153,50 @@ buttonModal.addEventListener("click", () => {
    modal1.classList.add("hide");
    modal2.classList.remove("hide");
 });
+
+// Fonction ajout de photo
+document.getElementById("addPhotoForm");
+document.addEventListener("submit", async (e) => {
+   e.preventDefault();
+
+   const imageUpload = document.getElementById("imageUpload").files[0];
+   const title = document.getElementById("title").value;
+   const category = document.getElementById("category").value;
+
+   const formData = new FormData();
+   formData.append("image", imageUpload);
+   formData.append("title", title);
+   formData.append("category", category);
+   try {
+      const checkLoginToken = sessionStorage.getItem("token");
+      const response = await fetch("http://localhost:5678/api/works/", {
+         method: "POST",
+         headers: {
+            Authorization: "Bearer " + checkLoginToken,
+         },
+         body: formData,
+      });
+
+      if (response.ok) {
+         displayWorks();
+      } else {
+         alert("Erreur");
+      }
+   } catch (error) {
+      console.error("Erreur:", error);
+   }
+});
+
+// Afficher catégories dans le formulaire
+async function displayCategoriesModal() {
+   const categories = await getCategories();
+   const select = document.getElementById("category");
+
+   categories.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.textContent = category.name;
+      select.appendChild(option);
+   });
+}
+displayCategoriesModal();

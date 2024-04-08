@@ -287,6 +287,10 @@ button {
    background-color: white;
 }
 
+.logo {
+   text-decoration: none;
+}
+
 .filters {
    display: flex;
    justify-content: center;
@@ -305,6 +309,44 @@ button {
    flex-direction: column;
    gap: 5px;
    margin: 40px;
+}
+
+.login-form input {
+   width: 379px;
+   height: 51px;
+   top: 338px;
+   left: 530px;
+   opacity: 0px;
+   background: #ffffff;
+   box-shadow: 0px 4px 14px 0px #00000017;
+   border: none;
+   margin-bottom: 25px;
+}
+
+#headerLoginLogged {
+   font-weight: 600;
+}
+
+#buttonLogin {
+   background-color: #1d6154;
+   color: white;
+   font-family: Syne;
+   font-size: 14px;
+   font-weight: 700;
+   line-height: 17px;
+   letter-spacing: 0em;
+   text-align: center;
+   width: 179px;
+}
+
+.buttonLoginContainer {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.forgotPW {
+   color: #3d3d3d;
 }
 
 .modalContainer {
@@ -382,6 +424,10 @@ button {
    background-color: black;
    padding: 22px;
    width: 100%;
+   width: 100vw;
+   position: absolute;
+   left: 0;
+   top: 0;
 }
 
 .edition a {
@@ -442,6 +488,5 @@ button {
    gap: 0px;
    border-radius: 3px 0px 0px 0px;
    opacity: 0px;
-
    background: #e8f1f6;
 }

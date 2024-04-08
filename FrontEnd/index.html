@@ -37,20 +37,24 @@
          <span><i class="fa-solid fa-arrow-left"></i></span>
          <span><i class="fa-solid fa-xmark"></i></span>
          <h2>Ajout photo</h2>
-         <div class="addPhoto"></div>
-         <h3>Titre</h3>
-         <h3>Catégorie</h3>
-         <button>Valider</button>
+         <form class="addPhoto">
+            <input type="file" id="imageUpload" accept="image/*" required />
+            <input type="text" id="title" placeholder="Titre" required />
+            <select id="category" required></select>
+            <button>Valider</button>
+         </form>
       </div>
    </div>
 
    <body>
       <header>
-         <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+         <a class="logo" href="index.html"
+            ><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a
+         >
          <nav>
             <ul>
-               <li>projets</li>
-               <li>contact</li>
+               <li><a href="../FrontEnd/index.html#portfolio">projets</a></li>
+               <li><a href="../FrontEnd/index.html#contact">contact</a></li>
                <li><a id="headerLogin" href="login.html">login</a></li>
                <li>
                   <img src="./assets/icons/instagram.png" alt="Instagram" />
