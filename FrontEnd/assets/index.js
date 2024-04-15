@@ -10,6 +10,8 @@ const editionClose = document.querySelectorAll(".fa-xmark");
 const buttonModal = document.querySelector(".buttonModal");
 const modal1 = document.querySelector("#modal1");
 const modal2 = document.querySelector("#modal2");
+const html = document.querySelector("html");
+const buttonValider = document.querySelector("buttonValider");
 
 // Fonction get galerie
 async function getWorks() {
@@ -90,9 +92,11 @@ function checkLogin() {
       headerLogin.textContent = "logout";
       headerLogin.href = "#";
       edition.classList.remove("hide");
+      html.classList.add("margin-edition");
    } else {
       headerLogin.href = "login.html";
       edition.classList.add("hide");
+      html.classList.remove("margin-edition");
    }
 }
 checkLogin();
@@ -128,7 +132,7 @@ async function displayImagesInModal(arrayWorks = null) {
          let workId = work.id;
          alert(work.id);
          await deleteWork(work.id); // Supprimer l'image en fonction de son ID
-         displayImagesInModal(); // Actualiser la modal après la suppression
+         displayImagesInModal(); // Actualiser la modale après la suppression
       });
       imgContainer.appendChild(img);
       imgContainer.appendChild(deleteButton);
@@ -155,8 +159,9 @@ buttonModal.addEventListener("click", () => {
 });
 
 // Fonction ajout de photo
-document.getElementById("addPhotoForm");
-document.addEventListener("submit", async (e) => {
+const formAddPhoto = document.getElementById("addPhotoForm");
+const validAddPhotoButton = document.getElementById("validAddPhotoButton");
+validAddPhotoButton.addEventListener("click", async (e) => {
    e.preventDefault();
 
    const imageUpload = document.getElementById("imageUpload").files[0];
@@ -179,6 +184,7 @@ document.addEventListener("submit", async (e) => {
 
       if (response.ok) {
          displayWorks();
+         displayImagesInModal();
       } else {
          alert("Erreur");
       }
@@ -200,3 +206,29 @@ async function displayCategoriesModal() {
    });
 }
 displayCategoriesModal();
+
+// Fonction preview image
+function previewImage() {
+   const imageUpload = document.getElementById("imageUpload");
+   const imagePreview = document.getElementById("imagePreview");
+   const addPhotoIcon = document.getElementById("addPhotoIcon");
+   const addPhotoButton = document.getElementById("addPhotoButton");
+   const addPhotoLabel = document.getElementById("addPhotoLabel");
+   if (imageUpload.files && imageUpload.files[0]) {
+      addPhotoIcon.classList.add("hide");
+      addPhotoButton.classList.add("hide");
+      addPhotoLabel.classList.add("hide");
+      const reader = new FileReader();
+      reader.onload = function (e) {
+         const img = document.createElement("img");
+         img.src = e.target.result;
+         img.classList.add("preview");
+         if (imagePreview.firstChild) {
+            imagePreview.removeChild(imagePreview.firstChild);
+         }
+         imagePreview.appendChild(img);
+      };
+      reader.readAsDataURL(imageUpload.files[0]);
+   }
+}
+document.getElementById("imageUpload").addEventListener("change", previewImage);

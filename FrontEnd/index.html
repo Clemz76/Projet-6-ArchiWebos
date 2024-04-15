@@ -37,19 +37,31 @@
          <span><i class="fa-solid fa-arrow-left"></i></span>
          <span><i class="fa-solid fa-xmark"></i></span>
          <h2>Ajout photo</h2>
-         <form class="addPhoto">
+         <form id="addPhotoForm" class="addPhoto">
             <input type="file" id="imageUpload" accept="image/*" required />
-            <input type="text" id="title" placeholder="Titre" required />
-            <select id="category" required></select>
-            <button>Valider</button>
+            <i id="addPhotoIcon" class="fa-regular fa-image"></i>
+            <button id="addPhotoButton" type="submit">+ Ajouter photo</button>
+            <label id="addPhotoLabel">jpg, png : 4mo max</label>
+            <div id="imagePreview"></div>
          </form>
+         <div class="modalInputs">
+            <div class="modalInput">
+               <h3>Titre</h3>
+               <input type="text" id="title" required />
+            </div>
+            <div class="modalInput">
+               <h3>Catégorie</h3>
+               <select id="category" required></select>
+            </div>
+         </div>
+         <button id="validAddPhotoButton" class="buttonModal">Valider</button>
       </div>
    </div>
 
    <body>
       <header>
          <a class="logo" href="index.html"
-            ><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a
+            ><h1>Sophie Bluel <span>ARCHITECTE D'INTÉRIEUR</span></h1></a
          >
          <nav>
             <ul>
@@ -87,7 +99,13 @@
             </article>
          </section>
          <section id="portfolio">
-            <h2>Mes Projets</h2>
+            <div class="projects">
+               <h2>Mes projets</h2>
+               <a class="editionButton2">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                  <p>modifier</p>
+               </a>
+            </div>
             <div class="filters">
                <button id="0">Tous</button>
             </div>
