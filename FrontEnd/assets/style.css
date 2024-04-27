@@ -412,6 +412,21 @@ button {
    text-align: center;
    width: 237px;
    margin: 6%;
+   border: none;
+}
+
+.buttonModalGrey {
+   background-color: #a7a7a7;
+   color: white;
+   font-family: Syne;
+   font-size: 14px;
+   font-weight: 700;
+   line-height: 17px;
+   letter-spacing: 0em;
+   text-align: center;
+   width: 237px;
+   margin: 6%;
+   border: none;
 }
 
 .buttonValider {
@@ -626,6 +641,10 @@ select {
    width: 100%;
    height: 50px;
    border: 1px solid white;
+}
+
+.modalInput h3 {
+   margin-bottom: 5px;
 }
 
 .fa-image {

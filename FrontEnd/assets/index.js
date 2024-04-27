@@ -7,11 +7,16 @@ const headerLogin = document.querySelector("#headerLogin");
 const edition = document.querySelector(".edition");
 const editionButton = document.querySelector(".editionButton");
 const editionClose = document.querySelectorAll(".fa-xmark");
+const editionBack = document.querySelectorAll(".fa-arrow-left");
 const buttonModal = document.querySelector(".buttonModal");
 const modal1 = document.querySelector("#modal1");
 const modal2 = document.querySelector("#modal2");
 const html = document.querySelector("html");
 const buttonValider = document.querySelector("buttonValider");
+const editionButton2 = document.querySelector(".editionButton2");
+const imageUpload = document.getElementById("imageUpload");
+const title = document.getElementById("title");
+const category = document.getElementById("category");
 
 // Fonction get galerie
 async function getWorks() {
@@ -93,10 +98,12 @@ function checkLogin() {
       headerLogin.href = "#";
       edition.classList.remove("hide");
       html.classList.add("margin-edition");
+      editionButton2.classList.remove("hide");
    } else {
       headerLogin.href = "login.html";
       edition.classList.add("hide");
       html.classList.remove("margin-edition");
+      editionButton2.classList.add("hide");
    }
 }
 checkLogin();
@@ -106,10 +113,22 @@ editionButton.addEventListener("click", () => {
    modalContainer.classList.remove("hide");
    modal1.classList.remove("hide");
 });
+editionButton2.addEventListener("click", () => {
+   modalContainer.classList.remove("hide");
+   modal1.classList.remove("hide");
+});
 editionClose.forEach((element) => {
    element.addEventListener("click", () => {
       modalContainer.classList.add("hide");
       modal1.classList.add("hide");
+      modal2.classList.add("hide");
+   });
+});
+
+editionBack.forEach((element) => {
+   element.addEventListener("click", () => {
+      modalContainer.classList.remove("hide");
+      modal1.classList.remove("hide");
       modal2.classList.add("hide");
    });
 });
@@ -130,9 +149,8 @@ async function displayImagesInModal(arrayWorks = null) {
       deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
       deleteButton.addEventListener("click", async () => {
          let workId = work.id;
-         alert(work.id);
-         await deleteWork(work.id); // Supprimer l'image en fonction de son ID
-         displayImagesInModal(); // Actualiser la modale après la suppression
+         await deleteWork(work.id);
+         displayImagesInModal();
       });
       imgContainer.appendChild(img);
       imgContainer.appendChild(deleteButton);
@@ -150,6 +168,7 @@ async function deleteWork(workId) {
       },
       method: "DELETE",
    });
+   displayWorks();
 }
 
 //Afficher modale d'ajout d'images
@@ -161,17 +180,32 @@ buttonModal.addEventListener("click", () => {
 // Fonction ajout de photo
 const formAddPhoto = document.getElementById("addPhotoForm");
 const validAddPhotoButton = document.getElementById("validAddPhotoButton");
+
+function verifyButton() {
+   if (imageUpload.files.length > 0 && title.value && category.value) {
+      validAddPhotoButton.classList.remove("buttonModalGrey");
+   } else {
+      validAddPhotoButton.classList.add("buttonModalGrey");
+   }
+}
+
+title.addEventListener("change", () => {
+   verifyButton();
+});
+category.addEventListener("change", () => {
+   verifyButton();
+});
+imageUpload.addEventListener("change", () => {
+   verifyButton();
+});
+
 validAddPhotoButton.addEventListener("click", async (e) => {
    e.preventDefault();
 
-   const imageUpload = document.getElementById("imageUpload").files[0];
-   const title = document.getElementById("title").value;
-   const category = document.getElementById("category").value;
-
    const formData = new FormData();
-   formData.append("image", imageUpload);
-   formData.append("title", title);
-   formData.append("category", category);
+   formData.append("image", imageUpload.files[0]);
+   formData.append("title", title.value);
+   formData.append("category", category.value);
    try {
       const checkLoginToken = sessionStorage.getItem("token");
       const response = await fetch("http://localhost:5678/api/works/", {
@@ -185,8 +219,10 @@ validAddPhotoButton.addEventListener("click", async (e) => {
       if (response.ok) {
          displayWorks();
          displayImagesInModal();
+         modal2.classList.add("hide");
+         modalContainer.classList.add("hide");
       } else {
-         alert("Erreur");
+         alert("Veuillez renseigner les informations nécessaires.");
       }
    } catch (error) {
       console.error("Erreur:", error);
@@ -198,10 +234,10 @@ async function displayCategoriesModal() {
    const categories = await getCategories();
    const select = document.getElementById("category");
 
-   categories.forEach((category) => {
+   categories.forEach((categoryItem) => {
       const option = document.createElement("option");
-      option.value = category.id;
-      option.textContent = category.name;
+      option.value = categoryItem.id;
+      option.textContent = categoryItem.name;
       select.appendChild(option);
    });
 }
@@ -209,7 +245,6 @@ displayCategoriesModal();
 
 // Fonction preview image
 function previewImage() {
-   const imageUpload = document.getElementById("imageUpload");
    const imagePreview = document.getElementById("imagePreview");
    const addPhotoIcon = document.getElementById("addPhotoIcon");
    const addPhotoButton = document.getElementById("addPhotoButton");
