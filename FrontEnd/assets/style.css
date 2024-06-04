@@ -219,6 +219,7 @@ li a:hover {
    grid-template-columns: 1fr 1fr 1fr;
    grid-column-gap: 20px;
    grid-row-gap: 20px;
+   padding-top: 50px;
 }
 
 .gallery img {
@@ -298,7 +299,6 @@ button {
    display: flex;
    justify-content: center;
    gap: 10px;
-   margin: 50px;
 }
 
 .login {
@@ -474,21 +474,16 @@ button {
    font-size: 16px;
 }
 
-.editionButton {
-   width: fit-content;
-   cursor: pointer;
-}
-
 .projects {
    display: flex;
    flex-direction: row;
    justify-content: center;
    align-items: center;
-   margin-bottom: 1em;
+   padding-bottom: 50px;
    gap: 30px;
 }
 
-.editionButton2 {
+.editionButton {
    cursor: pointer;
    display: flex;
    justify-content: center;

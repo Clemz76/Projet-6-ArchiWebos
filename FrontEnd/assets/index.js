@@ -13,7 +13,6 @@ const modal1 = document.querySelector("#modal1");
 const modal2 = document.querySelector("#modal2");
 const html = document.querySelector("html");
 const buttonValider = document.querySelector("buttonValider");
-const editionButton2 = document.querySelector(".editionButton2");
 const imageUpload = document.getElementById("imageUpload");
 const title = document.getElementById("title");
 const category = document.getElementById("category");
@@ -98,22 +97,20 @@ function checkLogin() {
       headerLogin.href = "#";
       edition.classList.remove("hide");
       html.classList.add("margin-edition");
-      editionButton2.classList.remove("hide");
+      editionButton.classList.remove("hide");
+      filters.classList.remove("hide");
    } else {
       headerLogin.href = "login.html";
       edition.classList.add("hide");
       html.classList.remove("margin-edition");
-      editionButton2.classList.add("hide");
+      editionButton.classList.add("hide");
+      filters.classList.add("hide");
    }
 }
 checkLogin();
 
 // Afficher modale
 editionButton.addEventListener("click", () => {
-   modalContainer.classList.remove("hide");
-   modal1.classList.remove("hide");
-});
-editionButton2.addEventListener("click", () => {
    modalContainer.classList.remove("hide");
    modal1.classList.remove("hide");
 });
@@ -180,6 +177,8 @@ buttonModal.addEventListener("click", () => {
 // Fonction ajout de photo
 const formAddPhoto = document.getElementById("addPhotoForm");
 const validAddPhotoButton = document.getElementById("validAddPhotoButton");
+const fileSize = 4 * 1024 * 1024; // 4 Mo
+const fileType = ["image/png", "image/jpeg"];
 
 function verifyButton() {
    if (imageUpload.files.length > 0 && title.value && category.value) {
@@ -196,6 +195,16 @@ category.addEventListener("change", () => {
    verifyButton();
 });
 imageUpload.addEventListener("change", () => {
+   const file = imageUpload.files[0];
+   if (file) {
+      if (!fileType.includes(file.type)) {
+         alert("Veuillez sélectionner un fichier PNG ou JPG.");
+         imageUpload.value = "";
+      } else if (file.size > fileSize) {
+         alert("La taille de l'image dépasse 4 Mo.");
+         imageUpload.value = "";
+      }
+   }
    verifyButton();
 });
 
