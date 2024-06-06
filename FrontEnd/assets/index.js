@@ -22,7 +22,6 @@ async function getWorks() {
    const response = await fetch("http://localhost:5678/api/works");
    return await response.json();
 }
-getWorks();
 
 // Fonction display galerie
 async function displayWorks(arrayWorks = null) {
@@ -98,13 +97,13 @@ function checkLogin() {
       edition.classList.remove("hide");
       html.classList.add("margin-edition");
       editionButton.classList.remove("hide");
-      filters.classList.remove("hide");
+      filters.classList.add("hide");
    } else {
       headerLogin.href = "login.html";
       edition.classList.add("hide");
       html.classList.remove("margin-edition");
       editionButton.classList.add("hide");
-      filters.classList.add("hide");
+      filters.classList.remove("hide");
    }
 }
 checkLogin();
@@ -145,7 +144,6 @@ async function displayImagesInModal(arrayWorks = null) {
       const deleteButton = document.createElement("button");
       deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
       deleteButton.addEventListener("click", async () => {
-         let workId = work.id;
          await deleteWork(work.id);
          displayImagesInModal();
       });
